@@ -1,7 +1,4 @@
-# import pandas lib as pd
-import pandas as pd
-
-# read by default 1st sheet of an excel file
-dataframe1 = pd.read_excel('book2.xlsx')
-
-print(dataframe1)
+from GUI import gui_main
+if __name__ == '__main__':
+    print("App Starting...")
+    gui_main()
