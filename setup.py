@@ -1,7 +1,7 @@
 from cx_Freeze import Executable, setup
 import sys
 import os
-
+import shutil
 PYTHON_INSTALL_DIR = os.path.dirname(sys.executable)
 os.environ['TCL_LIBRARY'] = os.path.join(PYTHON_INSTALL_DIR, 'tcl', 'tcl8.6')
 os.environ['TK_LIBRARY'] = os.path.join(PYTHON_INSTALL_DIR, 'tcl', 'tk8.6')
@@ -14,9 +14,9 @@ if sys.platform == 'win32':
     base = "Win32GUI"
 directory_table=[
 ("DesktopShortcut","DesktopFolder",
-    "Milk Rate Generater",
+    "Milk Rate Converter",
     "TARGETDIR",
-    "[TARGETDIR]\MilkRateGenerater.exe",
+    "[TARGETDIR]\MilkRateConverter.exe",
     None,
     None,
     None,
@@ -28,15 +28,18 @@ directory_table=[
 msi_data={"Shortcut":directory_table}
 bdist_msi_option={'data':msi_data}
 executables = [
-    Executable(script="MilkRateGenerater.py", base=base, icon="logo.ico")]
+    Executable(script="MilkRateConverter.py", base=base, icon="logo.ico")]
 
 setup(
-    name="Milk Rate Generater",
+    name="Milk Rate Converter",
     version="1.0",
     author='Sakib Malik',
-    description="Milk Rate Generator Software is build for Rate Generate for Everest Milk Machine",
-    options={"build_exe": {"packages": ["tkinter", "os"],
+    description="Milk Rate Converter Software is build for Rate Converter for Everest Milk Machine",
+    options={"build_exe": {"packages": ["tkinter", "os","xlrd","PIL"],
                            "include_files": include_files},"bdist_msi":bdist_msi_option,},
 
     executables=executables
 )
+
+# Remove bdist folder
+shutil.rmtree('build')

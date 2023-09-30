@@ -4,13 +4,14 @@ import datetime
 from tkinter.filedialog import *
 from tkinter import messagebox as mb
 from logic import gen_data
+import xlrd
  # GUI Decleration
 root = Tk()
 root.title("Milk Rate Converter")
 root.geometry('738x415')
-photo = Image.open(r'images/background.jpeg')
+photo = Image.open(r'background.jpeg')
 bg = ImageTk.PhotoImage(photo)
-logophoto = Image.open(r'images/logo.jpeg')
+logophoto = Image.open(r'logo.jpeg')
 logo = ImageTk.PhotoImage(logophoto)
 root.iconphoto(False, logo)
 label1 = Label(root, image=bg)
@@ -18,7 +19,15 @@ label1.place(x=0, y=0)
 root.resizable(0, 0)
 # Static Value
 filename=''
-
+# Dropdown menu options
+sheet_list = [
+    "Cow",
+    "Buffalo",
+    "Mix"
+]
+select_sheet=None
+# datatype of menu text
+select_sheet = StringVar()
 # save generated file
 def savefile(data):
     try:
@@ -45,7 +54,15 @@ def select_file(file_path_text):
     file_extension=filename.split('.')[-1]
     if(file_extension not in ['xls']):
         mb.showerror('File','File formart is wrong, please chose corrent file format like xls.')
-    else:
+    else: 
+        global select_sheet
+        book=xlrd.open_workbook(filename)
+        book_sheets_names=book.sheet_names()
+        sheet_list=book_sheets_names
+        select_sheet_option_menu=OptionMenu(root,select_sheet,*sheet_list)
+        select_sheet.set(sheet_list[0])
+        select_sheet_option_menu.configure(width=8,height=1,font='TimesNewRoman 15 bold italic',fg='blue')
+        select_sheet_option_menu.place(relx=0.05, rely=0.4)
         mb.showinfo("File", "File is in processing!")
 def convert_file():
     if(len(filename)==0):
@@ -56,7 +73,8 @@ def convert_file():
             mb.showerror('File','File formart is wrong, please chose corrent file format like xls.')
         else:
             mb.showinfo("File", "File is in processing!")
-            status,data=gen_data(file_path=filename)
+            global sheet_list
+            status,data=gen_data(file_path=filename,sheet_name=select_sheet.get())
             if status:
                 savefile(data)
             else:
@@ -74,7 +92,6 @@ def gui_main():
     file_path_text = Text(root, font='TimesNewRoman 15 bold italic', width=40,height=5,
                       bd=3)
     select_file_btn = Button(root, text='Select File: ', font='TimesNewRoman 15 bold italic', fg='blue',command=lambda:select_file(file_path_text))
-   
     # btn for action performed
     convert_file_btn = Button(root, text='Convert File', font='TimesNewRoman 15 bold italic', fg='white', bg='green', bd=3,
                      command=convert_file)

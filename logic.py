@@ -1,8 +1,5 @@
 # import pandas lib as pd
-import pandas as pd
-import json
-import os
-import math
+import os   
 import xlrd
 import datetime
 FILE_PATH=''
@@ -41,12 +38,12 @@ def generate_str(sh_obj,n_rows,n_cols):
                 end_str+=1
     return pricestring
 
-def gen_data(file_path):
+def gen_data(file_path,sheet_name):
     FILE_PATH=file_path
     if(os.path.exists(FILE_PATH)):
         book=xlrd.open_workbook(FILE_PATH)
         book_sheets_names=book.sheet_names()
-        sh = book.sheet_by_index(0)
+        sh = book.sheet_by_name(sheet_name=sheet_name)
         n_rows=sh.nrows
         n_cols=sh.ncols
         data=generate_str(sh_obj=sh,n_rows=n_rows,n_cols=n_cols)
