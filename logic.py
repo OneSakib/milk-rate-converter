@@ -24,18 +24,27 @@ def generate_str(sh_obj,n_rows,n_cols):
             if(len(FAT)>3):
                 FAT=f"{round(sh_obj.cell_value(rx,0)*10)}"
             RATE=round(round(sh_obj.cell_value(rowx=rx,colx=cy),2)*100)                 
+            if len(str(RATE))==5 :
+                RATE=round(round(sh_obj.cell_value(rowx=rx,colx=cy),2)*10)                 
+            elif len(str(RATE))>5 :
+                RATE=round(round(sh_obj.cell_value(rowx=rx,colx=cy),2))                 
             if(end_str>=3):
                 pricestring+='00\n'
                 pricestring+=f"j{SNF}{FAT}{RATE}"
                 end_str=1
             if(rx==n_rows-1):
-                pricestring+='0000000000000000000000'
+                if end_str==1:
+                    pricestring+='0000000000000000000000'
+                elif end_str==2:
+                    pricestring+='000000000000'
+                else:
+                    pricestring+='00'
                 end_str=0
                 if(cy != n_cols-1):
                     pricestring+='\nj'
             else:
                 pricestring+=f"{SNF}{FAT}{RATE}"
-                end_str+=1
+                end_str+=1  
     return pricestring
 
 def gen_data(file_path,sheet_name):

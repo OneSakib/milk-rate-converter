@@ -31,10 +31,12 @@ select_sheet = StringVar()
 # save generated file
 def savefile(data):
     try:
-        name = asksaveasfile(mode='w', defaultextension='.txt')
-        name.write(data)
-        name.close()
-        mb.showinfo("Save File", "File Save Successfully")
+        file_extension = [('Text Document', '*.txt'),('All Files', '*.*')]
+        name = asksaveasfile(mode='w', filetypes=file_extension,defaultextension=file_extension)
+        if name:
+            name.write(data)
+            name.close()
+            mb.showinfo("Save File", "File Save Successfully")
     except Exception as e:
         mb.showerror("Error on Save", f"Error is : {e}")
 
