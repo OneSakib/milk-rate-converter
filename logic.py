@@ -14,25 +14,25 @@ def generate_str(sh_obj,n_rows,n_cols):
     if month < 10:
         month = f'0{month}'
     pricestring = f"j000000{day}{month}{year}00000000000000000000\nj"
-    for cy in range(1,n_cols):
+    for rx in range(2,n_rows):
         end_str=0
-        for rx in range(2,n_rows):
-            SNF=f"0{round(sh_obj.cell_value(1,cy)*10)}"
-            if(len(SNF)>3):
-                SNF=f"{round(sh_obj.cell_value(1,cy)*10)}"
-            FAT=f"0{round(sh_obj.cell_value(rx,0)*10)}"
+        for cy in range(1,n_cols):
+            FAT=f"0{round(sh_obj.cell_value(1,cy)*10)}"
             if(len(FAT)>3):
-                FAT=f"{round(sh_obj.cell_value(rx,0)*10)}"
+                FAT=f"{round(sh_obj.cell_value(1,cy)*10)}"
+            SNF=f"0{round(sh_obj.cell_value(rx,0)*10)}"
+            if(len(SNF)>3):
+                SNF=f"{round(sh_obj.cell_value(rx,0)*10)}"
             RATE=round(round(sh_obj.cell_value(rowx=rx,colx=cy),2)*100)                 
             if len(str(RATE))==5 :
                 RATE=round(round(sh_obj.cell_value(rowx=rx,colx=cy),2)*10)                 
             elif len(str(RATE))>5 :
-                RATE=round(round(sh_obj.cell_value(rowx=rx,colx=cy),2))                 
+                RATE=round(round(sh_obj.cell_value(rowx=rx,colx=cy),2))                             
             if(end_str>=3):
                 pricestring+='00\n'
                 pricestring+=f"j{SNF}{FAT}{RATE}"
                 end_str=1
-            if(rx==n_rows-1):
+            if(cy==n_cols-1):
                 if end_str==1:
                     pricestring+='0000000000000000000000'
                 elif end_str==2:
@@ -40,7 +40,7 @@ def generate_str(sh_obj,n_rows,n_cols):
                 else:
                     pricestring+='00'
                 end_str=0
-                if(cy != n_cols-1):
+                if(rx != n_rows-1):
                     pricestring+='\nj'
             else:
                 pricestring+=f"{SNF}{FAT}{RATE}"
