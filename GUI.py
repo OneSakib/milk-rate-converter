@@ -19,15 +19,15 @@ label1.place(x=0, y=0)
 root.resizable(0, 0)
 # Static Value
 filename=''
-# Dropdown menu options
-sheet_list = [
-    "Cow",
-    "Buffalo",
-    "Mix"
-]
-select_sheet=None
+# # Dropdown menu options
+# sheet_list = [
+#     "Cow",
+#     "Buffalo",
+#     "Mix"
+# ]
+# select_sheet=None
 # datatype of menu text
-select_sheet = StringVar()
+# select_sheet = StringVar()
 # save generated file
 def savefile(data):
     try:
@@ -48,7 +48,7 @@ def select_file(file_path_text):
     global filename
     filename = askopenfilename(
         title='Open a file',
-        initialdir='/',
+        initialdir='/Users/malik/Desktop',
         filetypes=filetypes)
     filename=filename    
     file_path_text.delete("1.0",END)
@@ -57,14 +57,14 @@ def select_file(file_path_text):
     if(file_extension not in ['xls']):
         mb.showerror('File','File formart is wrong, please chose corrent file format like xls.')
     else: 
-        global select_sheet
-        book=xlrd.open_workbook(filename)
-        book_sheets_names=book.sheet_names()
-        sheet_list=book_sheets_names
-        select_sheet_option_menu=OptionMenu(root,select_sheet,*sheet_list)
-        select_sheet.set(sheet_list[0])
-        select_sheet_option_menu.configure(width=8,height=1,font='TimesNewRoman 15 bold italic',fg='blue')
-        select_sheet_option_menu.place(relx=0.05, rely=0.4)
+        # global select_sheet
+        # book=xlrd.open_workbook(filename)
+        # book_sheets_names=book.sheet_names()
+        # sheet_list=book_sheets_names
+        # select_sheet_option_menu=OptionMenu(root,select_sheet,*sheet_list)
+        # select_sheet.set(sheet_list[0])
+        # select_sheet_option_menu.configure(width=8,height=1,font='TimesNewRoman 15 bold italic',fg='blue')
+        # select_sheet_option_menu.place(relx=0.05, rely=0.4)
         mb.showinfo("File", "File is in processing!")
 def convert_file():
     if(len(filename)==0):
@@ -76,7 +76,7 @@ def convert_file():
         else:
             mb.showinfo("File", "File is in processing!")
             global sheet_list
-            status,data=gen_data(file_path=filename,sheet_name=select_sheet.get())
+            status,data=gen_data(file_path=filename)
             if status:
                 savefile(data)
             else:
