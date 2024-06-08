@@ -58,16 +58,16 @@ def gen_data(file_path):
         date=sh.cell_value(1,0)
         data1=gen_date(date)
         # Cow
-        sh = book.sheet_by_index(0)
-        n_rows=sh.nrows
-        n_cols=sh.ncols
-        data2=generate_str(sh_obj=sh,n_rows=n_rows,n_cols=n_cols)
+        # sh = book.sheet_by_index(0)
+        # n_rows=sh.nrows
+        # n_cols=sh.ncols
+        # data2=generate_str(sh_obj=sh,n_rows=n_rows,n_cols=n_cols)
         # Buffalo
         sh = book.sheet_by_index(1)
         n_rows=sh.nrows
         n_cols=sh.ncols
         data3=generate_str(sh_obj=sh,n_rows=n_rows,n_cols=n_cols)                
-        data=data1+data2+data3        
+        data=data1+data3        
         return 1,data
     else:
         return 0,"Error"

@@ -1,5 +1,4 @@
 [![Python 3.10 ](https://img.shields.io/badge/python-3.10-yellow.svg)](https://www.python.org/downloads/release/python-3105/)
-![Django 4 ](https://img.shields.io/badge/Django-4.0-green.svg)
 # Milk Rate Genrator
 
 ## Installation
@@ -9,17 +8,18 @@
 git clone https://github.com/OneSakib/<repo_name>.git
 pip install -r requirements.txt
 ```
-**2.Setup Virtualenv**
+**2.**
 ```sh
-virtualenv env
-source env/bin/activate
+pip install -r requirements.tx
 ```
-**3.Migrate & Start Server**
+**3.**
 ```sh
-python manage.py makemigrations
-python manage.py migrate
-python manage.py runserver
+ python .\MilkRateConverter.py
 ```
 
+**4.**
+```sh
+python setup.py bdist_msi
+```
 
 <!-- python .\setup.py bdist_msi -->
